@@ -1,18 +1,39 @@
-<div class="card m-auto">
-    <img
-        [src]="imageSource"
-        class="card-img-top">
+<div
+    class="card text-center m-auto"
+    [style.width.px]="imageWidth">
+
+    <ng-container *ngIf="imageSource else imageLoading">
+        <img
+            [src]="imageSource"
+            alt="Great Picture :)"
+            class="card-img-top">
+    </ng-container>
+
     <div class="card-body">
         <h5 class="card-title">Random Image Generator</h5>
-        <p class="card-text">
-            This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-        </p>
-        <p class="card-text">
+
+        <button
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="getNewPicture()">
+            Get New Image
+        </button>
+        <p class="card-text mt-2">
             <small class="text-muted">Last updated 3 mins ago</small>
         </p>
     </div>
 </div>
 
-<ng-template #imageNotLoaded>
-    <img src="fallbackImage.png" alt="Fallbackimage">
+<ng-template #imageLoading>
+    <div
+        class="card image-loading-container text-center m-auto position-relative"
+        [style.width.px]="imageWidth"
+        [style.height.px]="imageHeight">
+        <fa-icon
+            class="position-absolute top-50 start-50 translate-middle"
+            [icon]="faSpinner"
+            [spin]="true"
+            size="4x">
+        </fa-icon>
+    </div>
 </ng-template>

@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http'
+import { catchError, Subject, Subscription, switchMap, tap } from 'rxjs'
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { Subject, Subscription, switchMap, tap } from 'rxjs'
-
-const RANDOM_IMAGE_URL = 'https://picsum.photos/300/200'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 
 type ParsedImage = string | ArrayBuffer | null
-
 @Component({
     selector: 'app-random-picture-card',
     templateUrl: './random-picture-card.component.html',
@@ -13,9 +12,16 @@ type ParsedImage = string | ArrayBuffer | null
 })
 export class RandomPictureCardComponent implements OnInit, OnDestroy {
 
+    imageWidth: number = 600
+    imageHeight: number = 200
+    imageRequestUrl = `https://picsum.photos/${this.imageWidth}/${this.imageHeight}`
+    
+    
     imageSource!: ParsedImage
     getNewPicture$: Subject<void> = new Subject<void>()
     getNewPictureSub!: Subscription | null
+
+    faSpinner: IconDefinition = faSpinner
 
     constructor(
         private http: HttpClient
@@ -33,13 +39,19 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     setupPicRequestObs(): void {
         this.getNewPictureSub = this.getNewPicture$
             .pipe(
+                tap(() => this.imageSource = null),
                 switchMap(() => this.http.get(
-                    RANDOM_IMAGE_URL,
+                    this.imageRequestUrl,
                     {
                         responseType: 'blob'
                     }
                 )),
+                catchError((err, caught) => {
+                    console.error(err)
+                    return caught
+                }),
                 switchMap(this.createImageFromBlob),
+                tap((parsedImage) => console.log('parsedImage')),
                 tap((parsedImage: ParsedImage) => this.imageSource = parsedImage)
             )
             .subscribe()
@@ -62,7 +74,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
         } else {
             throw new Error('Image expected, none found')
         }
-        
+
         return reader$
     }
 
