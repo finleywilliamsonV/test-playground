@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/jest-playground'),
+      dir: require('path').join(__dirname, './coverage/test-playground'),
       subdir: '.',
       reporters: [
         { type: 'html' },
