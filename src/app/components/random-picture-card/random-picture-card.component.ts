@@ -5,6 +5,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 
 type ParsedImage = string | ArrayBuffer | null
+
 @Component({
     selector: 'app-random-picture-card',
     templateUrl: './random-picture-card.component.html',
@@ -15,7 +16,6 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     imageWidth: number = 600
     imageHeight: number = 200
     imageRequestUrl = `https://picsum.photos/${this.imageWidth}/${this.imageHeight}`
-    
     
     imageSource!: ParsedImage
     getNewPicture$: Subject<void> = new Subject<void>()
@@ -47,11 +47,10 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
                     }
                 )),
                 catchError((err, caught) => {
-                    console.error(err)
+                    console.error('Error with http request:', err)
                     return caught
                 }),
                 switchMap(this.createImageFromBlob),
-                tap((parsedImage) => console.log('parsedImage')),
                 tap((parsedImage: ParsedImage) => this.imageSource = parsedImage)
             )
             .subscribe()
