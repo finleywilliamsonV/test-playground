@@ -37,6 +37,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     }
 
     setupPicRequestObs(): void {
+        // https://medium.com/angular-in-depth/how-to-test-observables-a00038c7faad
         this.getNewPictureSub = this.getNewPicture$
             .pipe(
                 tap(() => this.imageSource = null),
@@ -61,7 +62,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     }
 
     private createImageFromBlob(image: Blob): Subject<ParsedImage> {
-        const reader$ = new Subject<string | ArrayBuffer | null>
+        const reader$ = new Subject<string | ArrayBuffer | null>()
 
         const reader: FileReader = new FileReader()
         reader.addEventListener("load", () => {

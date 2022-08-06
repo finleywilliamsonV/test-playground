@@ -18,6 +18,7 @@
             (click)="getNewPicture()">
             Get New Image
         </button>
+
         <p class="card-text mt-2">
             <small class="text-muted">Last updated 3 mins ago</small>
         </p>
@@ -30,6 +31,7 @@
         [style.width.px]="imageWidth"
         [style.height.px]="imageHeight">
         <fa-icon
+            id="spinner-icon"
             class="position-absolute top-50 start-50 translate-middle"
             [icon]="faSpinner"
             [spin]="true"
