@@ -27,6 +27,8 @@ describe('RandomPictureCardComponent', () => {
         expect(spinnerElement).toBeTruthy()
     })
 
+    // learn marble testing
+    // https://medium.com/angular-in-depth/how-to-test-observables-a00038c7faad
     it('should load an image after clicking the button', () => {
         // this is terrible -- need to learn marble testing
         component.getNewPicture()

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { catchError, Subject, Subscription, switchMap, tap } from 'rxjs'
+import { catchError, interval, map, Subject, Subscription, switchMap, tap, timer } from 'rxjs'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
@@ -13,15 +13,20 @@ type ParsedImage = string | ArrayBuffer | null
 })
 export class RandomPictureCardComponent implements OnInit, OnDestroy {
 
+    faSpinner: IconDefinition = faSpinner
+
     imageWidth: number = 600
     imageHeight: number = 200
     imageRequestUrl = `https://picsum.photos/${this.imageWidth}/${this.imageHeight}`
-    
+
     imageSource!: ParsedImage
     getNewPicture$: Subject<void> = new Subject<void>()
     getNewPictureSub!: Subscription | null
 
-    faSpinner: IconDefinition = faSpinner
+    imageLastUpdated!: number
+    imageLastUpdatedString: string = ''
+    updateImageLastUpdated$: Subject<void> = new Subject<void>()
+    updateImageLastUpdatedSub!: Subscription | null
 
     constructor(
         private http: HttpClient
@@ -29,6 +34,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.setupPicRequestObs()
+        this.setupImageLastUpdatedObs()
         this.getNewPicture()
     }
 
@@ -37,7 +43,6 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     }
 
     setupPicRequestObs(): void {
-        // https://medium.com/angular-in-depth/how-to-test-observables-a00038c7faad
         this.getNewPictureSub = this.getNewPicture$
             .pipe(
                 tap(() => this.imageSource = null),
@@ -52,7 +57,10 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
                     return caught
                 }),
                 switchMap(this.createImageFromBlob),
-                tap((parsedImage: ParsedImage) => this.imageSource = parsedImage)
+                tap((parsedImage: ParsedImage) => {
+                    this.imageSource = parsedImage
+                    this.restartImageUpdateTimer()
+                })
             )
             .subscribe()
     }
@@ -78,4 +86,31 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
         return reader$
     }
 
+    restartImageUpdateTimer(): void {
+        this.imageLastUpdatedString = ''
+        this.imageLastUpdated = Date.now()
+        this.updateImageLastUpdated$.next()
+    }
+
+    setupImageLastUpdatedObs(): void {
+        this.updateImageLastUpdatedSub = this.updateImageLastUpdated$
+            .pipe(
+                switchMap(() => interval(1000)),
+                tap((seconds) => {
+                    this.imageLastUpdatedString = `Last updated ${this.getImageUpdateString()} ago.`
+                }),
+            )
+            .subscribe()
+    }
+
+    getImageUpdateString(): string {
+        const minutes = Math.floor((Date.now() - this.imageLastUpdated) / 1000 / 60)
+        if (minutes < 1) {
+            return 'a few seconds'
+        } else if (minutes == 1) {
+            return '1 minute'
+        } else {
+            return `${minutes} minutes`
+        }
+    }
 }
