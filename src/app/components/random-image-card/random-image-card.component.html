@@ -15,12 +15,15 @@
         <button
             type="button"
             class="btn btn-outline-dark"
-            (click)="getNewPicture()">
+            (click)="getNewImage()">
             Get New Image
         </button>
 
-        <p class="card-text mt-2">
-            <small class="text-muted">{{imageLastUpdatedString}}</small>
+        <p
+            *ngIf="imageLastUpdatedString"
+            id="imageLastUpdatedText"
+            class="card-text mt-2 text-muted">
+            {{ imageLastUpdatedString }}
         </p>
     </div>
 </div>

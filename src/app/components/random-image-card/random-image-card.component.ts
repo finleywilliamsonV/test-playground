@@ -7,11 +7,11 @@ import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 type ParsedImage = string | ArrayBuffer | null
 
 @Component({
-    selector: 'app-random-picture-card',
-    templateUrl: './random-picture-card.component.html',
-    styleUrls: ['./random-picture-card.component.scss']
+    selector: 'app-random-image-card',
+    templateUrl: './random-image-card.component.html',
+    styleUrls: ['./random-image-card.component.scss']
 })
-export class RandomPictureCardComponent implements OnInit, OnDestroy {
+export class RandomImageCardComponent implements OnInit, OnDestroy {
 
     faSpinner: IconDefinition = faSpinner
 
@@ -20,10 +20,11 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     imageRequestUrl = `https://picsum.photos/${this.imageWidth}/${this.imageHeight}`
 
     imageSource!: ParsedImage
-    getNewPicture$: Subject<void> = new Subject<void>()
-    getNewPictureSub!: Subscription | null
+    getNewImage$: Subject<void> = new Subject<void>()
+    imageLoaded$: Subject<ParsedImage> = new Subject<ParsedImage>()
+    getNewImageSub!: Subscription | null
 
-    imageLastUpdated!: number
+    timeSinceLastImageUpdate!: number
     imageLastUpdatedString: string = ''
     updateImageLastUpdated$: Subject<void> = new Subject<void>()
     updateImageLastUpdatedSub!: Subscription | null
@@ -35,15 +36,15 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.setupPicRequestObs()
         this.setupImageLastUpdatedObs()
-        this.getNewPicture()
+        this.getNewImage()
     }
 
     ngOnDestroy(): void {
-        this.getNewPictureSub?.unsubscribe()
+        this.getNewImageSub?.unsubscribe()
     }
 
     setupPicRequestObs(): void {
-        this.getNewPictureSub = this.getNewPicture$
+        this.getNewImageSub = this.getNewImage$
             .pipe(
                 tap(() => this.imageSource = null),
                 switchMap(() => this.http.get(
@@ -59,14 +60,15 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
                 switchMap(this.createImageFromBlob),
                 tap((parsedImage: ParsedImage) => {
                     this.imageSource = parsedImage
+                    this.imageLoaded$.next(parsedImage)
                     this.restartImageUpdateTimer()
                 })
             )
             .subscribe()
     }
 
-    getNewPicture(): void {
-        this.getNewPicture$.next()
+    getNewImage(): void {
+        this.getNewImage$.next()
     }
 
     private createImageFromBlob(image: Blob): Subject<ParsedImage> {
@@ -88,7 +90,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
 
     restartImageUpdateTimer(): void {
         this.imageLastUpdatedString = ''
-        this.imageLastUpdated = Date.now()
+        this.timeSinceLastImageUpdate = Date.now()
         this.updateImageLastUpdated$.next()
     }
 
@@ -104,7 +106,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     }
 
     getImageUpdateString(): string {
-        const minutes = Math.floor((Date.now() - this.imageLastUpdated) / 1000 / 60)
+        const minutes = Math.floor((Date.now() - this.timeSinceLastImageUpdate) / 1000 / 60)
         if (minutes < 1) {
             return 'a few seconds'
         } else if (minutes == 1) {
