@@ -1,5 +1,7 @@
 
+@use '../styles/colors';
+
 * {
-    background-color: #2e2131;
+    background-color: colors.$dark-plum;
     color: #4d3e51;
 }

@@ -1,9 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'styles/colors';
 
 html {
-    background-color: #2e2131;
-    color: #4d3e51;
+    background-color: colors.$dark-plum;
 }
+
+$dark: colors.$dark-plum;
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
