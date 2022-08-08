@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { catchError, interval, map, Subject, Subscription, switchMap, tap, timer } from 'rxjs'
+import { catchError, interval, Subject, Subscription, switchMap, tap } from 'rxjs'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
@@ -70,7 +70,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
     }
 
     private createImageFromBlob(image: Blob): Subject<ParsedImage> {
-        const reader$ = new Subject<string | ArrayBuffer | null>()
+        const reader$ = new Subject<ParsedImage>()
 
         const reader: FileReader = new FileReader()
         reader.addEventListener("load", () => {
@@ -96,7 +96,7 @@ export class RandomPictureCardComponent implements OnInit, OnDestroy {
         this.updateImageLastUpdatedSub = this.updateImageLastUpdated$
             .pipe(
                 switchMap(() => interval(1000)),
-                tap((seconds) => {
+                tap(() => {
                     this.imageLastUpdatedString = `Last updated ${this.getImageUpdateString()} ago.`
                 }),
             )

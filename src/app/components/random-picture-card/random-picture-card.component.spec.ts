@@ -43,7 +43,7 @@ describe('RandomPictureCardComponent', () => {
         const intervalId = setInterval(() => {
             if (component.imageSource || intervalCount > maxIntervals) {
                 clearInterval(intervalId)
-                
+
                 // now see if we have the image? -- BAD
                 expect(component.imageSource).toBeTruthy()
             }
