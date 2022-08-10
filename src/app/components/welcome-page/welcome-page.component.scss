@@ -1,11 +1,17 @@
 @use 'src/styles/colors.scss';
 
-.title-border {
-    font-size: 2vw;
-    max-width: 30vw;
+.title-container {
+    font-size: 5vw;
+    max-width: 50vw;
     padding: 1.5vw 3vw;
     border: 3px solid colors.$mauve;
     border-radius: 2vw;
     color: colors.$orchid;
     margin: auto;
+}
+
+.subheading {
+    font-size: 2vw;
+    font-weight: 300;
+    color: colors.$orchid;
 }

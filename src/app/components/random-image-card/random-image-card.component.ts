@@ -22,12 +22,12 @@ export class RandomImageCardComponent implements OnInit, OnDestroy {
     imageSource!: ParsedImage
     getNewImage$: Subject<void> = new Subject<void>()
     imageLoaded$: Subject<ParsedImage> = new Subject<ParsedImage>()
-    getNewImageSub!: Subscription | null
+    getNewImageSub: Subscription | undefined
 
     timeSinceLastImageUpdate!: number
     imageLastUpdatedString: string = ''
     updateImageLastUpdated$: Subject<void> = new Subject<void>()
-    updateImageLastUpdatedSub!: Subscription | null
+    updateImageLastUpdatedSub: Subscription | undefined
 
     constructor(
         private http: HttpClient
