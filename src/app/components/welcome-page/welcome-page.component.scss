@@ -1,7 +1,7 @@
 @use 'src/styles/colors.scss';
 
 .title-container {
-    font-size: 5vw;
+    font-size: 3vw;
     max-width: 50vw;
     padding: 1.5vw 3vw;
     border: 3px solid colors.$mauve;
@@ -14,4 +14,8 @@
     font-size: 2vw;
     font-weight: 300;
     color: colors.$orchid;
+}
+
+.large-margin-top {
+    margin-top: 20vh
 }
