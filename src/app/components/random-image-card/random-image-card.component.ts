@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { catchError, interval, Subject, Subscription, switchMap, tap } from 'rxjs'
+import { catchError, interval, race, Subject, Subscription, switchMap, tap, timeout } from 'rxjs'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
@@ -17,7 +17,10 @@ export class RandomImageCardComponent implements OnInit, OnDestroy {
 
     imageWidth: number = 600
     imageHeight: number = 200
-    imageRequestUrl = `https://picsum.photos/${this.imageWidth}/${this.imageHeight}`
+    imageRequestUrls = [
+        `https://picsum.photos/${this.imageWidth}/${this.imageHeight}`,
+        `https://random.imagecdn.app/${this.imageWidth}/${this.imageHeight}`
+    ]
 
     imageSource!: ParsedImage
     getNewImage$: Subject<void> = new Subject<void>()
@@ -44,17 +47,22 @@ export class RandomImageCardComponent implements OnInit, OnDestroy {
     }
 
     setupPicRequestObs(): void {
+
+        // not really necessary but lorem picsum was taking a bit long for requests
+        // decided a backup wouldn't hurt :)
+        const imageRequestRace = race(
+            this.imageRequestUrls.map(
+                (url) =>
+                    this.http.get(url, { responseType: 'blob' })
+            )
+        )
+
         this.getNewImageSub = this.getNewImage$
             .pipe(
                 tap(() => this.imageSource = null),
-                switchMap(() => this.http.get(
-                    this.imageRequestUrl,
-                    {
-                        responseType: 'blob'
-                    }
-                )),
-                catchError((err, caught) => {
-                    console.error('Error with http request:', err)
+                switchMap(() => imageRequestRace),
+                catchError((err: { message?: string }, caught) => {
+                    console.error('Error with http request:', err.message ?? 'no message provided')
                     return caught
                 }),
                 switchMap(this.createImageFromBlob),
