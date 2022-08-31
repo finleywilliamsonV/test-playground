@@ -1,0 +1,104 @@
+<div class="row mt-5">
+    <div class="col">
+        <app-page-title title="Rock Paper Scissors"></app-page-title>
+    </div>
+</div>
+
+<div class="row mt-5">
+
+    <!-- buffer -->
+    <div class="col-2"></div>
+
+    <!-- player side -->
+    <div class="col-2 pe-1 text-end">
+
+        <div class="row" [style.height.px]="50"></div>
+
+            <div class="row">
+                <div class="col my-2">
+                    <button class="btn btn-dark rps-button me-4">
+                        <fa-icon
+                            id="spinner-icon"
+                            [icon]="faRock"
+                            size="4x">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col my-2">
+                    <button class="btn btn-dark rps-button me-4">
+                        <fa-icon
+                            id="spinner-icon"
+                            [icon]="faPaper"
+                            size="4x">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col my-2">
+                    <button class="btn btn-dark rps-button me-4">
+                        <fa-icon
+                            id="spinner-icon"
+                            [icon]="faScissors"
+                            size="4x">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+
+    </div>
+
+    <div class="col-4 px-1">
+        <div class="card text-center">Play Field</div>
+    </div>
+
+    <!-- computer side -->
+    <div class="col-2 ps-1 text-start">
+
+        <div class="row" [style.height.px]="50"></div>
+
+            <div class="row">
+                <div class="col my-2">
+                    <button class="btn btn-dark rps-button ms-4">
+                        <fa-icon
+                            id="spinner-icon"
+                            [icon]="faRock"
+                            size="4x">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col my-2">
+                    <button class="btn btn-dark rps-button ms-4">
+                        <fa-icon
+                            id="spinner-icon"
+                            [icon]="faPaper"
+                            size="4x">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col my-2">
+                    <button class="btn btn-dark rps-button ms-4">
+                        <fa-icon
+                            id="spinner-icon"
+                            [icon]="faScissors"
+                            size="4x">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+
+    </div>
+
+    <!-- buffer -->
+    <div class="col-2"></div>
+</div>

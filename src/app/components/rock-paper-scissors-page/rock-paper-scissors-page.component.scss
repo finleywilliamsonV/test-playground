@@ -1,0 +1,8 @@
+@use 'src/styles/colors.scss';
+
+.rps-button {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    color: colors.$orchid
+}
