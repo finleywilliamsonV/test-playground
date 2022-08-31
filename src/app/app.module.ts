@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageTitleComponent } from './components/page-title/page-title.component';
-import { RandomImageCardComponent } from './components/random-image-page/random-image-card/random-image-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
@@ -16,7 +15,6 @@ import { RandomImagePageComponent } from './components/random-image-page/random-
   declarations: [
     AppComponent,
     PageTitleComponent,
-    RandomImageCardComponent,
     NavBarComponent,
     WelcomePageComponent,
     RandomImagePageComponent

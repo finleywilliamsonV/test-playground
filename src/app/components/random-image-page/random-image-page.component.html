@@ -1,5 +1,51 @@
 <div class="row mt-5">
     <div class="col">
-        <app-random-image-card></app-random-image-card>
+        
+        <app-page-title title="Random Image Generator"></app-page-title>
+
+        <div
+            class="card text-center m-auto"
+            [style.width.px]="imageWidth">
+
+            <ng-container *ngIf="imageSource else imageLoading">
+                <img
+                    [src]="imageSource"
+                    alt="Great Picture :)"
+                    class="card-img-top">
+            </ng-container>
+
+            <div class="card-body">
+
+                <button
+                    type="button"
+                    class="btn btn-outline-dark mt-3"
+                    (click)="getNewImage()">
+                    Get New Image
+                </button>
+
+                <p
+                    *ngIf="imageLastUpdatedString"
+                    id="imageLastUpdatedText"
+                    class="card-text mt-3 text-muted">
+            {{ imageLastUpdatedString }}
+        </p>
+            </div>
+        </div>
+
+        <ng-template #imageLoading>
+            <div
+                class="card image-loading-container text-center m-auto position-relative"
+                [style.width.px]="imageWidth"
+                [style.height.px]="imageHeight">
+                <fa-icon
+                    id="spinner-icon"
+                    class="position-absolute top-50 start-50 translate-middle"
+                    [icon]="faSpinner"
+                    [spin]="true"
+                    size="4x">
+                </fa-icon>
+            </div>
+        </ng-template>
+
     </div>
 </div>

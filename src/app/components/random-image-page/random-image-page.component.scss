@@ -1,0 +1,13 @@
+@use 'src/styles/colors.scss';
+
+.card {
+    border-color: colors.$orchid;
+}
+
+.image-loading-container {
+    background-color: colors.$dark-mauve;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    color: colors.$orchid;
+}
