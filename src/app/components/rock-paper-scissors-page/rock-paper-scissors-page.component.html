@@ -12,43 +12,21 @@
     <!-- player side -->
     <div class="col-2 pe-1 text-end">
 
-        <div class="row" [style.height.px]="50"></div>
+        <div
+            class="row"
+            [style.height.px]="50"></div>
 
-            <div class="row">
-                <div class="col my-2">
-                    <button class="btn btn-dark rps-button me-4">
-                        <fa-icon
-                            id="spinner-icon"
-                            [icon]="faRock"
-                            size="4x">
-                        </fa-icon>
-                    </button>
-                </div>
+        <div *ngFor="let move of moves | keyvalue: preserveOrder" class="row">
+            <div class="col my-2">
+                <button class="btn btn-dark rps-button me-4">
+                    <fa-icon
+                        id="spinner-icon"
+                        [icon]="move.value"
+                        size="4x">
+                    </fa-icon>
+                </button>
             </div>
-
-            <div class="row">
-                <div class="col my-2">
-                    <button class="btn btn-dark rps-button me-4">
-                        <fa-icon
-                            id="spinner-icon"
-                            [icon]="faPaper"
-                            size="4x">
-                        </fa-icon>
-                    </button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col my-2">
-                    <button class="btn btn-dark rps-button me-4">
-                        <fa-icon
-                            id="spinner-icon"
-                            [icon]="faScissors"
-                            size="4x">
-                        </fa-icon>
-                    </button>
-                </div>
-            </div>
+        </div>
 
     </div>
 
@@ -59,43 +37,21 @@
     <!-- computer side -->
     <div class="col-2 ps-1 text-start">
 
-        <div class="row" [style.height.px]="50"></div>
+        <div
+            class="row"
+            [style.height.px]="50"></div>
 
-            <div class="row">
-                <div class="col my-2">
-                    <button class="btn btn-dark rps-button ms-4">
-                        <fa-icon
-                            id="spinner-icon"
-                            [icon]="faRock"
-                            size="4x">
-                        </fa-icon>
-                    </button>
-                </div>
+        <div *ngFor="let move of moves | keyvalue: preserveOrder" class="row">
+            <div class="col my-2">
+                <button class="btn btn-dark rps-button ms-4">
+                    <fa-icon
+                        id="spinner-icon"
+                        [icon]="move.value"
+                        size="4x">
+                    </fa-icon>
+                </button>
             </div>
-
-            <div class="row">
-                <div class="col my-2">
-                    <button class="btn btn-dark rps-button ms-4">
-                        <fa-icon
-                            id="spinner-icon"
-                            [icon]="faPaper"
-                            size="4x">
-                        </fa-icon>
-                    </button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col my-2">
-                    <button class="btn btn-dark rps-button ms-4">
-                        <fa-icon
-                            id="spinner-icon"
-                            [icon]="faScissors"
-                            size="4x">
-                        </fa-icon>
-                    </button>
-                </div>
-            </div>
+        </div>
 
     </div>
 

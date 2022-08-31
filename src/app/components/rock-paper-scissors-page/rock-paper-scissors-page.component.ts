@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { faHand, faHandBackFist, faHandScissors } from '@fortawesome/free-solid-svg-icons'
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
+import { preserveOrder } from 'src/libs/helper-functions'
+
+type PossibleMove = 'rock' | 'paper' | 'scissors'
+type Player = 'user' | 'cpu'
 
 @Component({
     selector: 'app-rock-paper-scissors-page',
@@ -9,9 +13,16 @@ import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 })
 export class RockPaperScissorsPageComponent implements OnInit {
 
-    faRock: IconDefinition = faHandBackFist
-    faPaper: IconDefinition = faHand
-    faScissors: IconDefinition = faHandScissors
+    preserveOrder = preserveOrder
+
+    moves: Record<PossibleMove, IconDefinition> = {
+        rock: faHandBackFist,
+        paper: faHand,
+        scissors: faHandScissors,
+    } as const
+
+    playerMove!: PossibleMove
+    cpuMove!: PossibleMove
 
     constructor() { }
 
