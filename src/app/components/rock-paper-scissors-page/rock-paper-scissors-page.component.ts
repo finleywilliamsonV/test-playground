@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 import { preserveOrder } from 'src/libs/helper-functions'
 
 type PossibleMove = 'rock' | 'paper' | 'scissors' | 'none'
-const GAME_RESET_INTERVAL_MS = 2000
+const GAME_RESET_INTERVAL_MS = 3000
 
 @Component({
     selector: 'app-rock-paper-scissors-page',
@@ -49,21 +49,9 @@ export class RockPaperScissorsPageComponent implements OnInit {
         this.startResetTimer()
     }
 
-    selectComputerMove() {
-        switch (Math.floor(Math.random() * 3) + 1) {
-            case 1:
-                this.computerMove = this.moves.rock
-                break
-            case 2:
-                this.computerMove = this.moves.paper
-                break
-            case 3:
-                this.computerMove = this.moves.scissors
-                break
-            default:
-                this.computerMove = this.moves.none
-                break
-        }
+    selectComputerMove(): void {
+        const index = Math.floor(Math.random() * 3)
+        this.computerMove = Object.values(this.moves)[index]
     }
 
     calculateWinner(): void {
