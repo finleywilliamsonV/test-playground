@@ -1,8 +1,26 @@
-@use 'src/styles/colors.scss';
+@use "src/styles/colors.scss";
 
-.rps-button {
+.move-selection-button {
     height: 100px;
     width: 100px;
     border-radius: 50%;
-    color: colors.$orchid
+    color: colors.$orchid;
+}
+
+#resetButton {
+    color: colors.$dark-plum;
+}
+
+#resultsCard {
+    margin-top: 9vh;
+    padding: 5vh;
+    background-color: colors.$orchid;
+}
+
+.result-icon {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    color: colors.$orchid;
+    pointer-events: none;
 }

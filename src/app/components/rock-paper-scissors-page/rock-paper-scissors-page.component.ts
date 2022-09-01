@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { faHand, faHandBackFist, faHandScissors } from '@fortawesome/free-solid-svg-icons'
+import { faHand, faHandBackFist, faHandScissors, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 import { preserveOrder } from 'src/libs/helper-functions'
 
-type PossibleMove = 'rock' | 'paper' | 'scissors'
+type PossibleMove = 'rock' | 'paper' | 'scissors' | 'none'
 type Player = 'user' | 'cpu'
 
 @Component({
@@ -19,14 +19,75 @@ export class RockPaperScissorsPageComponent implements OnInit {
         rock: faHandBackFist,
         paper: faHand,
         scissors: faHandScissors,
-    } as const
+        none: faQuestion
+    }
 
-    playerMove!: PossibleMove
-    cpuMove!: PossibleMove
+    playerMove: IconDefinition = this.moves.none
+    computerMove: IconDefinition = this.moves.none
+    winner: 'player' | 'computer' | 'draw' | 'undecided' = 'undecided'
 
     constructor() { }
 
     ngOnInit(): void {
     }
+
+    // would rather have used a record but a readonly map gives the correct type
+    // for the return from the keyvalue pipe in the html
+    getMoveMap(): ReadonlyMap<PossibleMove, IconDefinition> {
+        return new Map(
+            Object.entries(this.moves)
+        ) as ReadonlyMap<PossibleMove, IconDefinition>
+    }
+
+    selectMove(move: IconDefinition) {
+        this.playerMove = move
+        this.selectComputerMove()
+        this.calculateWinner()
+    }
+
+    selectComputerMove() {
+        switch (Math.floor(Math.random() * 3) + 1) {
+            case 1:
+                this.computerMove = this.moves.rock
+                break
+            case 2:
+                this.computerMove = this.moves.paper
+                break
+            case 3:
+                this.computerMove = this.moves.scissors
+                break
+            default:
+                this.computerMove = this.moves.none
+                break
+        }
+    }
+
+    calculateWinner(): void {
+
+        if (this.playerMove == this.moves.none || this.computerMove == this.moves.none) {
+            this.winner = 'undecided'
+
+        } else if (this.playerMove == this.computerMove) {
+            this.winner = 'draw'
+
+        } else if (
+            // all player winning moves
+            (this.playerMove == this.moves.rock && this.computerMove == this.moves.scissors)
+            || (this.playerMove == this.moves.paper && this.computerMove == this.moves.rock)
+            || (this.playerMove == this.moves.scissors && this.computerMove == this.moves.paper)
+        ) {
+            this.winner = 'player'
+
+        } else {
+            // else computer wins
+            this.winner = 'computer'
+        }
+    }
+
+    resetGame(): void {
+        this.playerMove = this.moves.none
+        this.computerMove = this.moves.none
+    }
+
 
 }
