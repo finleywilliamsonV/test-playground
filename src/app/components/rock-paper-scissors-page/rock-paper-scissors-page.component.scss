@@ -11,10 +11,14 @@
     color: colors.$dark-plum;
 }
 
-#resultsCard {
-    margin-top: 9vh;
+#resultsArea {
+    margin-top: 2vh;
     padding: 5vh;
     background-color: colors.$orchid;
+}
+
+#results-label {
+    color: colors.$orchid
 }
 
 .result-icon {
@@ -22,5 +26,17 @@
     width: 200px;
     border-radius: 50%;
     color: colors.$orchid;
+}
+
+.no-click {
     pointer-events: none;
+}
+
+.name-label {
+    color: colors.$orchid;
+    font-size: 2em;
+    border: 2px solid colors.$mauve;
+    border-radius: 2vw;
+    padding-top: .5vh;
+    padding-bottom: .5vh;
 }

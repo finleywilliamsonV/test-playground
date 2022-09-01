@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 import { preserveOrder } from 'src/libs/helper-functions'
 
 type PossibleMove = 'rock' | 'paper' | 'scissors' | 'none'
-type Player = 'user' | 'cpu'
+const GAME_RESET_INTERVAL_MS = 2000
 
 @Component({
     selector: 'app-rock-paper-scissors-page',
@@ -25,10 +25,12 @@ export class RockPaperScissorsPageComponent implements OnInit {
     playerMove: IconDefinition = this.moves.none
     computerMove: IconDefinition = this.moves.none
     winner: 'player' | 'computer' | 'draw' | 'undecided' = 'undecided'
+    resultsLabel!: string
 
     constructor() { }
 
     ngOnInit(): void {
+        this.calculateResultsLabel()
     }
 
     // would rather have used a record but a readonly map gives the correct type
@@ -43,6 +45,8 @@ export class RockPaperScissorsPageComponent implements OnInit {
         this.playerMove = move
         this.selectComputerMove()
         this.calculateWinner()
+        this.calculateResultsLabel()
+        this.startResetTimer()
     }
 
     selectComputerMove() {
@@ -63,7 +67,6 @@ export class RockPaperScissorsPageComponent implements OnInit {
     }
 
     calculateWinner(): void {
-
         if (this.playerMove == this.moves.none || this.computerMove == this.moves.none) {
             this.winner = 'undecided'
 
@@ -87,7 +90,36 @@ export class RockPaperScissorsPageComponent implements OnInit {
     resetGame(): void {
         this.playerMove = this.moves.none
         this.computerMove = this.moves.none
+        this.winner = 'undecided'
+        this.calculateResultsLabel()
     }
 
+    calculateResultsLabel(): void {
+        if (this.winner == 'undecided') {
+            this.resultsLabel = 'Pick a Move'
+        } else if (this.winner == 'player') {
+            this.resultsLabel = 'Player Wins ^_^'
+        } else if (this.winner == 'computer') {
+            this.resultsLabel = 'CPU Wins @_@'
+        } else if (this.winner == 'draw') {
+            this.resultsLabel = 'It\'s a Draw!'
+        }
+    }
 
+    /**
+     * Uses IIFE because I don't want timeoutId as a class variable
+     */
+    startResetTimer = (
+        () => {
+            let timeoutId: ReturnType<typeof setTimeout>
+
+            return () => {
+                clearTimeout(timeoutId)
+
+                timeoutId = setTimeout(() => {
+                    this.resetGame()
+                }, GAME_RESET_INTERVAL_MS)
+            }
+        }
+    )()
 }

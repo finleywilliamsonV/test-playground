@@ -8,14 +8,14 @@
 <div class="row mt-5">
 
     <!-- buffer -->
-    <div class="col-2"></div>
+    <div class="col-3"></div>
 
     <!-- player side -->
-    <div class="col-2 pe-1 text-end">
+    <div class="col-1 pe-1 text-center">
 
-        <div
-            class="row"
-            [style.height.px]="50"></div>
+        <div class="row mb-2">
+            <div class="display-5 name-label">Player</div>
+        </div>
 
         <div
             *ngFor="let move of moves | keyvalue: preserveOrder"
@@ -23,10 +23,9 @@
             <ng-container *ngIf="move.value != moves.none">
                 <div class="col my-2">
                     <button
-                        class="btn btn-dark move-selection-button me-4"
+                        class="btn btn-dark move-selection-button"
                         (click)="selectMove(move.value)">
                         <fa-icon
-                            id="spinner-icon"
                             [icon]="move.value"
                             size="4x">
                         </fa-icon>
@@ -38,17 +37,28 @@
 
     </div>
 
+    <!-- results card -->
     <div class="col-4 px-1">
+
+        <!-- results label -->
+        <div class="row text-center">
+            <div
+                id="results-label"
+                class="display-5">
+                {{resultsLabel}}
+            </div>
+        </div>
+
         <div
-            id="resultsCard"
+            id="resultsArea"
             class="card text-center">
 
+            <!-- results card -->
             <div class="row">
 
                 <div class="col-6">
-                    <button class="btn btn-dark result-icon">
+                    <button class="btn btn-dark result-icon no-click">
                         <fa-icon
-                            id="spinner-icon"
                             [icon]="playerMove"
                             size="8x">
                         </fa-icon>
@@ -56,9 +66,8 @@
                 </div>
 
                 <div class="col-6">
-                    <button class="btn btn-dark result-icon">
+                    <button class="btn btn-dark result-icon no-click active">
                         <fa-icon
-                            id="spinner-icon"
                             [icon]="computerMove"
                             size="8x">
                         </fa-icon>
@@ -70,20 +79,19 @@
     </div>
 
     <!-- computer side -->
-    <div class="col-2 ps-1 text-start">
+    <div class="col-1 ps-1 text-center">
 
-        <div
-            class="row"
-            [style.height.px]="50"></div>
+        <div class="row mb-2">
+            <div class="display-5 name-label">CPU</div>
+        </div>
 
         <div
             *ngFor="let move of moves | keyvalue: preserveOrder"
             class="row">
             <ng-container *ngIf="move.value != moves.none">
                 <div class="col my-2">
-                    <button class="btn btn-dark move-selection-button ms-4">
+                    <button class="btn btn-dark move-selection-button no-click active">
                         <fa-icon
-                            id="spinner-icon"
                             [icon]="move.value"
                             size="4x">
                         </fa-icon>
@@ -95,17 +103,5 @@
     </div>
 
     <!-- buffer -->
-    <div class="col-2"></div>
-</div>
-
-<!-- reset button -->
-<div class="row mt-5 text-center">
-    <div class="col">
-        <button
-            id="resetButton"
-            class="btn btn-light"
-            (click)="resetGame()">
-            Reset Game
-        </button>
-    </div>
+    <div class="col-3"></div>
 </div>

@@ -26,7 +26,7 @@ describe('PageTitleComponent', () => {
     pageTitleComponent.title = TEST_TITLE
 
     const componentElement: HTMLElement = fixture.nativeElement
-    const titleDiv: HTMLDivElement | null = componentElement.querySelector('div#title-container')
+    const titleDiv: HTMLDivElement | null = componentElement.querySelector('div#titleContainer')
 
     fixture.detectChanges()
 
