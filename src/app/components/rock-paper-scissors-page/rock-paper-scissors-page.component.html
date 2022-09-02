@@ -23,6 +23,7 @@
             <ng-container *ngIf="move.value != moves.none">
                 <div class="col my-2">
                     <button
+                        id="moveBtn_player_{{move.key}}"
                         class="btn btn-dark move-selection-button"
                         (click)="selectMove(move.value)">
                         <fa-icon
@@ -45,7 +46,7 @@
             <div
                 id="results-label"
                 class="display-5">
-                {{resultsLabel}}
+                {{resultsLabels[winner]}}
             </div>
         </div>
 
@@ -57,7 +58,9 @@
             <div class="row">
 
                 <div class="col-6">
-                    <button class="btn btn-dark result-icon no-click">
+                    <button
+                        id="playerMoveSelection"
+                        class="btn btn-dark result-icon no-click">
                         <fa-icon
                             [icon]="playerMove"
                             size="8x">
@@ -66,7 +69,9 @@
                 </div>
 
                 <div class="col-6">
-                    <button class="btn btn-dark result-icon no-click active">
+                    <button
+                        id="computerMoveSelection"
+                        class="btn btn-dark result-icon no-click active">
                         <fa-icon
                             [icon]="computerMove"
                             size="8x">
@@ -90,7 +95,9 @@
             class="row">
             <ng-container *ngIf="move.value != moves.none">
                 <div class="col my-2">
-                    <button class="btn btn-dark move-selection-button no-click active">
+                    <button
+                        id="moveBtn_cpu_{{move.key}}"
+                        class="btn btn-dark move-selection-button no-click active">
                         <fa-icon
                             [icon]="move.value"
                             size="4x">
