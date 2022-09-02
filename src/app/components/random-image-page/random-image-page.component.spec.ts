@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RandomImagePageComponent } from './random-image-page.component'
 import { catchError, EMPTY, finalize, take, tap, timeout } from 'rxjs'
 import { HttpClientModule } from '@angular/common/http'
+import { PageTitleComponent } from '../page-title/page-title.component'
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 
 describe('RandomImagePageComponent', () => {
     let component: RandomImagePageComponent
@@ -10,7 +12,8 @@ describe('RandomImagePageComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [HttpClientModule],
-            declarations: [RandomImagePageComponent]
+            declarations: [RandomImagePageComponent, PageTitleComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents()
 
         fixture = TestBed.createComponent(RandomImagePageComponent)
