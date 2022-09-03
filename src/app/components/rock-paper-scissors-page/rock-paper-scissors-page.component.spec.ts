@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 import { RockPaperScissorsPageComponent } from './rock-paper-scissors-page.component'
 
@@ -9,6 +10,7 @@ describe('RockPaperScissorsPageComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports:[FontAwesomeModule],
             declarations: [RockPaperScissorsPageComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
@@ -39,7 +41,7 @@ describe('RockPaperScissorsPageComponent', () => {
     })
 
     it('should display "pick a move" on initialization', () => {
-        const label = fixture.nativeElement.querySelector('#results-label') as HTMLDivElement
+        const label = fixture.nativeElement.querySelector('#resultsLabel') as HTMLDivElement
         expect(label.innerHTML.includes(component.resultsLabels.undecided)).toBeTruthy()
     })
 
@@ -48,37 +50,33 @@ describe('RockPaperScissorsPageComponent', () => {
         expect(component.getIconNameForIcon(component.computerMove)).toBe('none')
     })
 
-    // it('should correctly display a player win', () => {
+    it('should correctly calculate a player win', async () => {
 
-    //     component.playerMove = component.moves.paper
-    //     component.computerMove = component.moves.rock
+        component.playerMove = component.moves.paper
+        component.computerMove = component.moves.rock
 
-    //     component.calculateWinner()
+        component.calculateWinner()
 
-    //     const label = fixture.nativeElement.querySelector('#results-label') as HTMLDivElement
-    //     console.log('label.innerHTML:', label.innerHTML)
-    //     expect(label.innerHTML.includes(component.resultsLabels.player)).toBeTruthy()
-    // })
+        expect(component.winner).toBe('player')
+    })
 
-    // it('should correctly display a computer win', () => {
+    it('should correctly calculate a computer win', () => {
 
-    //     component.playerMove = component.moves.rock
-    //     component.computerMove = component.moves.scissors
+        component.playerMove = component.moves.rock
+        component.computerMove = component.moves.paper
 
-    //     component.calculateWinner()
+        component.calculateWinner()
 
-    //     const label = fixture.nativeElement.querySelector('#results-label') as HTMLDivElement
-    //     expect(label.innerHTML.includes(component.resultsLabels.computer)).toBeTruthy()
-    // })
+        expect(component.winner).toBe('computer')
+    })
 
-    // it('should correctly display a draw', () => {
+    it('should correctly calculate a draw', () => {
 
-    //     component.playerMove = component.moves.paper
-    //     component.computerMove = component.moves.paper
+        component.playerMove = component.moves.paper
+        component.computerMove = component.moves.paper
 
-    //     component.calculateWinner()
+        component.calculateWinner()
 
-    //     const label = fixture.nativeElement.querySelector('#results-label') as HTMLDivElement
-    //     expect(label.innerHTML.includes(component.resultsLabels.draw)).toBeTruthy()
-    // })
+        expect(component.winner).toBe('draw')
+    })
 })
