@@ -1,0 +1,7 @@
+export const Colors = {
+    "dark-plum": '#2e2131',
+    "dark-mauve": '#735d78',
+    "mauve": '#b392ac',
+    "orchid": '#e8c2ca',
+    "pale-pink": '#f7d1cd'
+} as const
