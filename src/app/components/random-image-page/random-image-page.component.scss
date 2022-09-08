@@ -2,6 +2,7 @@
 
 .card {
     border-color: colors.$orchid;
+    max-width: 80vw;
 }
 
 .image-loading-container {
@@ -10,4 +11,7 @@
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     color: colors.$orchid;
+}
+
+#randomImage {
 }

@@ -16,7 +16,7 @@ export class RandomImagePageComponent implements OnInit {
     faSpinner: IconDefinition = faSpinner
 
     imageWidth: number = 600
-    imageHeight: number = 200
+    imageHeight: number = 400
     imageRequestUrls = [
         `https://picsum.photos/${this.imageWidth}/${this.imageHeight}`,
         `https://random.imagecdn.app/${this.imageWidth}/${this.imageHeight}`
